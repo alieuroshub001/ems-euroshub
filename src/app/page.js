@@ -6,15 +6,12 @@ import Hero from '@/components/LandingPage/Hero/Hero';
 import Features from '@/components/LandingPage/Features/Features';
 import Expertise from '@/components/LandingPage/Expertise/Expertise';
 import Contact from '@/components/LandingPage/Contact/Contact';
-import { Boxes } from '@/components/ui/background-boxes';
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-slate-900">
-      {/* Full-screen background boxes */}
-      <div className="fixed inset-0 z-0">
-        <Boxes />
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-gray-900">
+      {/* Simple gradient background - no performance impact */}
+      <div className="fixed inset-0 z-0 bg-gradient-to-br from-slate-900/50 via-transparent to-slate-800/30" />
       
       {/* Header */}
       <Header />

@@ -55,7 +55,7 @@ export default function NavigationProvider({ children }) {
 
   return (
     <NavigationContext.Provider value={{ isLoading, startLoading, stopLoading }}>
-      <LoadingSpinner isLoading={isLoading} text="Loading page..." />
+      <LoadingSpinner isLoading={isLoading} />
       {children}
     </NavigationContext.Provider>
   );

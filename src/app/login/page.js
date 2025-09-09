@@ -1,6 +1,6 @@
 import LoginForm from '@/components/Login/LoginForm';
 import LoginQuote from '@/components/Login/LoginQuote';
-import { Boxes } from '@/components/ui/background-boxes';
+import OptimizedBackground from '@/components/Login/LoginBackGround';
 import Link from 'next/link';
 
 export const metadata = {
@@ -11,8 +11,8 @@ export const metadata = {
 export default function LoginPage() {
   return (
     <div className="min-h-screen relative w-full overflow-hidden bg-slate-900 flex">
-      {/* Full-screen background boxes */}
-      <Boxes />
+      {/* Optimized background */}
+      <OptimizedBackground />
       
       {/* Back Button - Top Left Corner */}
       <Link 
