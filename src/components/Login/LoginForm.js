@@ -36,7 +36,28 @@ export default function LoginForm() {
     try {
       const response = await authAPI.login(formData.email, formData.password);
       authAPI.storeAuthData(response.token, response.user);
-      router.push('/dashboard');
+      
+      // Redirect based on user role
+      const userRole = response.user.role || response.user.userType || 'employee';
+      
+      switch (userRole.toLowerCase()) {
+        case 'superadmin':
+          router.push('/superadmin');
+          break;
+        case 'admin':
+          router.push('/admin');
+          break;
+        case 'hr':
+          router.push('/hr');
+          break;
+        case 'client':
+          router.push('/client');
+          break;
+        case 'employee':
+        default:
+          router.push('/employee');
+          break;
+      }
     } catch (error) {
       console.error('Login failed:', error);
       setError(error.message || 'Login failed. Please check your credentials.');

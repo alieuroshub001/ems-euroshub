@@ -22,12 +22,9 @@ import {
   X
 } from 'lucide-react';
 import { getRoleInfo } from '../Sidebar/SidebarLinks';
+import { useAuth } from '@/hooks/useAuth';
 
 const Header = memo(({
-  userRole = 'employee',
-  userName = 'John Doe',
-  userEmail = 'user@example.com',
-  userAvatar = null,
   onSidebarToggle = () => {},
   isCollapsed = false,
   title = 'Dashboard',
@@ -46,6 +43,12 @@ const Header = memo(({
   const searchRef = useRef(null);
   const router = useRouter();
   const pathname = usePathname();
+  const { user, logout: authLogout, isLoading } = useAuth();
+  
+  const userRole = user?.role || 'employee';
+  const userName = user?.name || 'Loading...';
+  const userEmail = user?.email || '';
+  const userAvatar = user?.avatar || null;
   const roleInfo = getRoleInfo(userRole);
 
   // Update current time
@@ -122,10 +125,8 @@ const Header = memo(({
   }, [showSearch]);
 
   const handleLogout = useCallback(() => {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('userData');
-    router.push('/');
-  }, [router]);
+    authLogout();
+  }, [authLogout]);
 
   const toggleFullscreen = useCallback(() => {
     if (!document.fullscreenElement) {

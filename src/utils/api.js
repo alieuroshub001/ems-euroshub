@@ -97,4 +97,37 @@ export const authAPI = {
   }
 };
 
+// User management API functions
+export const userAPI = {
+  // Get user profile
+  getProfile: async () => {
+    return apiCall('/auth/profile');
+  },
+
+  // Get all users (for admin/superadmin)
+  getAllUsers: async () => {
+    return apiCall('/auth/users');
+  },
+
+  // Get single user by ID
+  getUserById: async (userId) => {
+    return apiCall(`/auth/users/${userId}`);
+  },
+
+  // Update user
+  updateUser: async (userId, userData) => {
+    return apiCall(`/auth/users/${userId}`, {
+      method: 'PUT',
+      body: JSON.stringify(userData),
+    });
+  },
+
+  // Delete user
+  deleteUser: async (userId) => {
+    return apiCall(`/auth/users/${userId}`, {
+      method: 'DELETE',
+    });
+  }
+};
+
 export default apiCall;

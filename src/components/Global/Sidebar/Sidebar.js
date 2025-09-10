@@ -11,29 +11,34 @@ import {
   User
 } from 'lucide-react';
 import { getNavigationByRole, getRoleInfo, footerLinks } from './SidebarLinks';
+import { useAuth } from '@/hooks/useAuth';
 
 const Sidebar = memo(({ 
-  userRole = 'employee', 
-  userName = 'John Doe', 
-  userEmail = 'user@example.com',
   isOpen = true,
-  onToggle = () => {}
+  onToggle = () => {},
+  onCollapseChange = () => {}
 }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [expandedItems, setExpandedItems] = useState(new Set());
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
+  const { user, logout: authLogout, isLoading } = useAuth();
 
+  const userRole = user?.role || 'employee';
+  const userName = user?.name || 'Loading...';
+  const userEmail = user?.email || '';
   const navigationLinks = getNavigationByRole(userRole);
   const roleInfo = getRoleInfo(userRole);
 
   const toggleCollapsed = useCallback(() => {
-    setIsCollapsed(prev => !prev);
-    if (isCollapsed) {
+    const newCollapsed = !isCollapsed;
+    setIsCollapsed(newCollapsed);
+    onCollapseChange(newCollapsed);
+    if (newCollapsed) {
       setExpandedItems(new Set());
     }
-  }, [isCollapsed]);
+  }, [isCollapsed, onCollapseChange]);
 
   const toggleMobile = useCallback(() => {
     setIsMobileOpen(prev => !prev);
@@ -55,14 +60,12 @@ const Sidebar = memo(({
 
   const handleNavigation = useCallback((path, isLogout = false) => {
     if (isLogout) {
-      localStorage.removeItem('authToken');
-      localStorage.removeItem('userData');
-      router.push('/');
+      authLogout();
     } else {
       router.push(path);
     }
     setIsMobileOpen(false);
-  }, [router]);
+  }, [router, authLogout]);
 
   const isActive = useCallback((path) => {
     return pathname === path || pathname.startsWith(path + '/');
@@ -132,7 +135,7 @@ const Sidebar = memo(({
                     handleNavigation(item.path);
                   }
                 }}
-                className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg transition-all duration-200 group ${
+                className={`w-full flex items-center ${item.subItems && !isCollapsed ? 'justify-between' : 'justify-start'} px-3 py-2.5 rounded-lg transition-all duration-200 group ${
                   isActive(item.path)
                     ? 'bg-[#0fb8af]/20 text-[#0fb8af]'
                     : 'text-white/70 hover:text-white hover:bg-white/10'
@@ -146,12 +149,12 @@ const Sidebar = memo(({
                     }`} 
                   />
                   {!isCollapsed && (
-                    <div className="min-w-0">
-                      <span className="font-medium text-sm truncate block">
+                    <div className="min-w-0 text-left">
+                      <span className="font-medium text-sm truncate block text-left">
                         {item.title}
                       </span>
                       {item.description && (
-                        <span className="text-xs text-white/50 truncate block">
+                        <span className="text-xs text-white/50 truncate block text-left">
                           {item.description}
                         </span>
                       )}
@@ -183,7 +186,7 @@ const Sidebar = memo(({
                       }`}
                     >
                       <subItem.icon size={16} className="flex-shrink-0" />
-                      <span className="truncate">{subItem.title}</span>
+                      <span className="truncate text-left">{subItem.title}</span>
                     </button>
                   ))}
                 </div>
@@ -209,7 +212,7 @@ const Sidebar = memo(({
               }`}
             >
               <item.icon size={16} className="flex-shrink-0" />
-              {!isCollapsed && <span className="truncate">{item.title}</span>}
+              {!isCollapsed && <span className="truncate text-left">{item.title}</span>}
             </button>
           ))}
         </div>
