@@ -20,7 +20,9 @@ import {
   LogOut,
   ChevronDown,
   ChevronRight,
-  User
+  User,
+  Kanban,
+  Trello
 } from 'lucide-react';
 
 // Navigation links for each user role
@@ -31,6 +33,12 @@ export const navigationLinks = {
       icon: LayoutDashboard,
       path: '/superadmin',
       description: 'Overview and analytics'
+    },
+    {
+      title: 'Project Management',
+      icon: Trello,
+      path: '/superadmin/projects',
+      description: 'Kanban boards and task management'
     },
     {
       title: 'User Management',
@@ -78,6 +86,12 @@ export const navigationLinks = {
       icon: LayoutDashboard,
       path: '/admin',
       description: 'Company overview'
+    },
+    {
+      title: 'Project Management',
+      icon: Trello,
+      path: '/admin/projects',
+      description: 'Kanban boards and task management'
     },
     {
       title: 'User Management',
@@ -245,6 +259,12 @@ export const navigationLinks = {
       icon: LayoutDashboard,
       path: '/employee',
       description: 'Personal overview'
+    },
+    {
+      title: 'Project Management',
+      icon: Trello,
+      path: '/employee/projects',
+      description: 'My tasks and project boards'
     },
     {
       title: 'Profile',
