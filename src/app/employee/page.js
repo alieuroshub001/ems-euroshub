@@ -226,7 +226,7 @@ export default function EmployeeDashboard() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
             {/* Today's Schedule */}
             <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Today's Schedule</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Today&apos;s Schedule</h3>
               <div className="space-y-3">
                 {todaysSchedule.map((item, index) => (
                   <div key={index} className="flex items-center justify-between p-3 rounded-lg bg-gray-50">

@@ -154,7 +154,7 @@ export default function AdminDashboard() {
         <main className="p-6">
           <div className="mb-8">
             <h1 className="text-2xl font-bold text-gray-900 mb-2">Welcome back, {user?.name || 'Admin'}!</h1>
-            <p className="text-gray-600">Manage your organization's workforce and operations</p>
+            <p className="text-gray-600">Manage your organization&apos;s workforce and operations</p>
           </div>
 
           {/* Stats Grid */}
